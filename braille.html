@@ -5,10 +5,17 @@
     <title>Math braille converter</title>
 
     <style>
-    input {
+    textarea {
         box-sizing: border-box;
-        font-size: 72px;
-        width: 100%;
+        font-size: 36px;
+        left: 0;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        width: 50%;
+    }
+    #output {
+        left: 50%;
     }
     </style>
 
@@ -23,8 +30,9 @@
 <body>
 
 <div>
-<input type="text" id="input" autocomplete="off" value="(x-3^2)^(1/3) - 4/7"/><br>
-<input type="text" id="output" readonly />
+<textarea id="input">(x-3^2)^(1/3) - 4/7
+2x - 4/3</textarea>
+<textarea id="output" readonly></textarea>
 </div>
 
 <script type="text/javascript">
@@ -38,12 +46,15 @@
     input.addEventListener("input", update, false);
 
     function update() {
-        var parsed = parse(input.value);
-        if (parsed != null) {
-            output.value = parsed.tex();
-        } else {
-            output.value = "";
-        }
+        var lines = input.value.split("\n");
+        output.value = lines.map(function(line) {
+            var parsed = parse(line);
+            if (parsed != null) {
+                return parsed.tex();
+            } else {
+                return "";
+            }
+        }).join("\n");
     }
 
     output.addEventListener("focus", function() {

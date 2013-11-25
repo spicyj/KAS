@@ -2170,7 +2170,7 @@ _.extend(Const.prototype, {
 
     tex: function() {
         if (this.symbol === "pi") {
-            return "\\pi ";
+            return ".p";
         } else if (this.symbol === "e") {
             return "e";
         }
