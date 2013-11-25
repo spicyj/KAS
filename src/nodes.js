@@ -695,7 +695,7 @@ _.extend(Mul.prototype, {
             return negatives + numerator;
         } else {
             var denominator = new Mul(_.invoke(inverses, "asDivide")).flatten().tex();
-            return negatives + "\\frac{" + numerator + "}{" + denominator + "}";
+            return negatives + "?" + numerator + "/" + denominator + "#";
         }
     },
 
@@ -1205,12 +1205,12 @@ _.extend(Pow.prototype, {
         if (this.isDivide()) {
 
             // e.g. x ^ -1 w/hint -> 1/x
-            return "\\frac{1}{" + this.asDivide().tex() + "}";
+            return "?1/" + this.asDivide().tex() + "#";
 
         } else if (this.isRoot()) {
 
             // e.g. x ^ 1/2 w/hint -> sqrt(x)
-            return "\\sqrt{" + this.base.tex() + "}";
+            return ">" + this.base.tex() + "}";
 
         } else if (this.base instanceof Trig && !this.base.isInverse() &&
             this.exp instanceof Num && this.exp.isSimple() &&
@@ -1218,7 +1218,7 @@ _.extend(Pow.prototype, {
 
             // e.g sin(x) ^ 2 -> sin^2(x)
             var split = this.base.tex({split: true});
-            return split[0] + "^{" + this.exp.tex() + "}" + split[1];
+            return split[0] + "~" + this.exp.tex() + "\"" + split[1];
 
         } else {
 
@@ -1227,12 +1227,12 @@ _.extend(Pow.prototype, {
             if (this.base instanceof Seq || this.base instanceof Pow ||
                 (this.base instanceof Num && !this.base.isSimple())) {
                 // e.g. a+b ^ c -> (a+b)^c
-                base = "(" + base + ")";
+                // base = "(" + base + ")";
             } else if (this.base instanceof Trig || this.base instanceof Log) {
                 // e.g. ln(x) ^ 2 -> [ln(x)]^2
-                base = "[" + base + "]";
+                // base = "[" + base + "]";
             } 
-            return base + "^{" + this.exp.tex() + "}";
+            return base + "~" + this.exp.tex() + "\"";
         }
     },
 
@@ -2272,7 +2272,7 @@ _.extend(Rational.prototype, {
     },
 
     tex: function() {
-        var tex = "\\frac{" + Math.abs(this.n).toString() + "}{" + this.d.toString() + "}";
+        var tex = "?" + Math.abs(this.n).toString() + "/" + this.d.toString() + "#";
         return this.n < 0 ? "-" + tex : tex;
     },
 
