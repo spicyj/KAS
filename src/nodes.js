@@ -1227,10 +1227,10 @@ _.extend(Pow.prototype, {
             if (this.base instanceof Seq || this.base instanceof Pow ||
                 (this.base instanceof Num && !this.base.isSimple())) {
                 // e.g. a+b ^ c -> (a+b)^c
-                // base = "(" + base + ")";
+                base = "(" + base + ")";
             } else if (this.base instanceof Trig || this.base instanceof Log) {
                 // e.g. ln(x) ^ 2 -> [ln(x)]^2
-                // base = "[" + base + "]";
+                base = "(" + base + ")";
             } 
             return base + "~" + this.exp.tex() + "\"";
         }
